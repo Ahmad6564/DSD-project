@@ -22,3 +22,6 @@ Implementing a UARt two-way communication system, enabling data transmission and
 * Transmitter Module (uart_tx): Implements the logic to send data bit by bit, starting with a start bit and ending with a stop bit.
 * Receiver Module (uart_rx): Captures serial data, stores it in a buffer, and outputs the received data when the transmission is complete.
 * Top-Level Module (uart_two_way_comm): Combines both the transmitter and receiver modules to enable full two-way communication.
+
+![image](https://github.com/user-attachments/assets/ba8b69ce-c5fa-4afb-9e4b-d1dce3bbf091)
+
