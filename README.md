@@ -25,3 +25,45 @@ Implementing a UARt two-way communication system, enabling data transmission and
 
 ![image](https://github.com/user-attachments/assets/ba8b69ce-c5fa-4afb-9e4b-d1dce3bbf091)
 
+
+
+## Serial Matrix Multiplication on FPGA
+
+#### Overview
+This project implements **Serial Matrix Multiplication** on an FPGA. The design focuses on multiplying two matrices in a serial fashion, where data is processed sequentially for each element of the matrices. This approach reduces hardware resource utilization at the cost of increased computation time.
+
+#### Key Features:
+- **Serial Multiplication**: The system reads one matrix element at a time, performs multiplication and accumulation sequentially.
+- **Matrix Sizes**: Configurable to work for matrices of size **3x3** or **10x10**.
+- **UART Communication**: Data is transferred between the PC and FPGA using a UART interface.
+- **Resource-Efficient Design**: The serial processing minimizes the number of multipliers required, suitable for FPGA implementations with limited hardware resources.
+- **Output Storage**: The final result of the matrix multiplication is sent back to the PC and stored in a file.
+
+#### Workflow:
+1. **Data Input**: The two matrices are sent to the FPGA via UART.
+2. **Serial Computation**:
+   - Multiply corresponding elements of the matrices.
+   - Accumulate the results in a register to compute each output element.
+3. **Result Transmission**: The computed matrix is sent back to the PC through UART.
+
+#### Files:
+1. **serial_matrix_mult.v**: Implements the serial matrix multiplication logic.
+2. **uart_interface.v**: Handles UART communication for data input/output.
+3. **top_module.v**: Combines the matrix multiplication logic and UART interface.
+4. **testbench.v**: Testbench to simulate and verify the design behavior.
+
+#### How It Works:
+- **Input Format**: Matrix data is sent as a sequence of numbers via UART.
+- **Computation**:
+   - A nested loop-like structure processes one element of the matrices at a time.
+   - Results are stored temporarily in an accumulation register.
+- **Output**: The final result matrix is sent serially back to the PC using UART.
+
+#### Applications:
+- Ideal for FPGA-based systems where resource optimization is critical.
+- Useful for low-power embedded systems requiring matrix operations.
+
+---
+
+This project combines matrix multiplication, serial data handling, and FPGA hardware design, demonstrating efficient resource utilization for computational tasks.
+
