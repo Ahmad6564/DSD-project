@@ -64,3 +64,22 @@ The test bench [tb_serial_matrix_multiplication.v](#tb_serial_matrix_multiplicat
 
 * Verify Output: Once the done signal is asserted, verify the output matrix C and also I show the result of matrix multiplication on console.
 
+### Constraints File
+
+The [Constraints.ucf](#Constraints.ucf) file specifies the pin assignments for the Nexys 3 board. Ensure that the pins are correctly mapped to the FPGA's I/O pins.
+
+#### Example Pin Assignments
+* clk: C9
+* reset: A7
+* start: B8
+* Matrix A Inputs: P11, P12, N12, M12, M13, L14, L13, K14, K13
+* Matrix B Inputs: J14, J13, H14, H13, G14, G13, F14, F13, E13
+* Matrix C Outputs: E12, D12, C12, B12, A12, C11, B11, A11, A10 
+* done: B10
+#### Orginal Matrix in testbench is:
+![image](https://github.com/user-attachments/assets/ab91c6bd-2a4e-48d3-86c7-2fe09cfabd72)
+#### Output of 3x3 matrix  multiplication on EDA playground
+  ![image](https://github.com/user-attachments/assets/f9c114be-90aa-44a3-be34-4524f8741b92)
+
+
+
