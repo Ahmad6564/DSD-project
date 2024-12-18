@@ -1,7 +1,7 @@
 # DSD-project
  The project is fast matrix multiplication on FPGA. Data must be transferred from PC to FPGA via UART or Ethernet cable and result be sent back and stored in a file. 
 ## UART One-Way Communication
-This repository demonstrates the implementation of a UART (Universal Asynchronous Receiver/Transmitter) one-way communication system on FPGA using Verilog. It includes a UART transmitter module [uart_tx](#uart-tx) and its corresponding testbench  [uart_tx_tb](#uart-tx-tb)
+This repository demonstrates the implementation of a UART (Universal Asynchronous Receiver/Transmitter) one-way communication system on FPGA using Verilog. It includes a UART transmitter module [uart_tx.v](#uart-tx.v) and its corresponding testbench  [uart_tx_tb.v](#uart-tx-tb.v)
 ### Overview
 UART is a widely used communication protocol that transmits data serially, one bit at a time. This implementation focuses on the one-way communication aspect of UART, where data is transmitted from the FPGA to an external receiver.
 ###uart_tx One Way communication
@@ -26,44 +26,41 @@ Implementing a UARt two-way communication system, enabling data transmission and
 ![image](https://github.com/user-attachments/assets/ba8b69ce-c5fa-4afb-9e4b-d1dce3bbf091)
 
 
-
 ## Serial Matrix Multiplication on FPGA
+This project demonstrates the implementation of a serial matrix multiplication algorithm on an FPGA. The design is synthesized for a 3x3 matrix multiplication and is implemented on a Nexys 3 board with a Spartan-6 FPGA. This implementation does not involve UART communication.
 
-#### Overview
-This project implements **Serial Matrix Multiplication** on an FPGA. The design focuses on multiplying two matrices in a serial fashion, where data is processed sequentially for each element of the matrices. This approach reduces hardware resource utilization at the cost of increased computation time.
+### Table of Contents
+* Introduction
+* Project Structure
+* Verilog Modules
+* Serial Matrix Multiplication
+* Test Bench
+* Constraints File
+* Simulation and Synthesis
 
-#### Key Features:
-- **Serial Multiplication**: The system reads one matrix element at a time, performs multiplication and accumulation sequentially.
-- **Matrix Sizes**: Configurable to work for matrices of size **3x3** or **10x10**.
-- **UART Communication**: Data is transferred between the PC and FPGA using a UART interface.
-- **Resource-Efficient Design**: The serial processing minimizes the number of multipliers required, suitable for FPGA implementations with limited hardware resources.
-- **Output Storage**: The final result of the matrix multiplication is sent back to the PC and stored in a file.
+### Introduction
+This project aims to implement a serial matrix multiplication algorithm on an FPGA. The matrix multiplication is carried out in a sequential manner, and the result is stored in a third matrix. This project is designed to be run on a Nexys 3 FPGA board using a Spartan-6 FPGA.
 
-#### Workflow:
-1. **Data Input**: The two matrices are sent to the FPGA via UART.
-2. **Serial Computation**:
-   - Multiply corresponding elements of the matrices.
-   - Accumulate the results in a register to compute each output element.
-3. **Result Transmission**: The computed matrix is sent back to the PC through UART.
+#### Project Structure ####
+The repository contains the following files:
+* [serial_matrix_multiplication.v](#serial_matrix_multiplication.v): Verilog module for serial matrix multiplication.
 
-#### Files:
-1. **serial_matrix_mult.v**: Implements the serial matrix multiplication logic.
-2. **uart_interface.v**: Handles UART communication for data input/output.
-3. **top_module.v**: Combines the matrix multiplication logic and UART interface.
-4. **testbench.v**: Testbench to simulate and verify the design behavior.
+* [tb_serial_matrix_multiplication.v](#tb_serial_matrix_multiplication.v): Test bench for the serial matrix multiplication module.
 
-#### How It Works:
-- **Input Format**: Matrix data is sent as a sequence of numbers via UART.
-- **Computation**:
-   - A nested loop-like structure processes one element of the matrices at a time.
-   - Results are stored temporarily in an accumulation register.
-- **Output**: The final result matrix is sent serially back to the PC using UART.
+* [tb_serial_matrix_multiplication.v](#Nexys3_Constraints.ucf): Constraints file for the Nexys 3 board.
 
-#### Applications:
-- Ideal for FPGA-based systems where resource optimization is critical.
-- Useful for low-power embedded systems requiring matrix operations.
 
----
+### Verilog Modules
+### Serial Matrix Multiplication
+The main Verilog module [serial_matrix_multiplication.v](#serial_matrix_multiplication.v) performs 3x3 matrix multiplication in a sequential manner. The design includes an FSM (Finite State Machine) that controls the multiplication process, iterating through each element of the matrices.
 
-This project combines matrix multiplication, serial data handling, and FPGA hardware design, demonstrating efficient resource utilization for computational tasks.
+### Test Bench
+The test bench [tb_serial_matrix_multiplication.v](#tb_serial_matrix_multiplication.v) simulates the serial matrix multiplication module. It initializes two 3x3 matrices, triggers the multiplication process, and verifies the result.
+
+### Usage
+* Initialize Inputs: Initialize the matrices A and B.
+
+* Start Multiplication: Trigger the start signal to begin the multiplication process.
+
+* Verify Output: Once the done signal is asserted, verify the output matrix C and also I show the result of matrix multiplication on console.
 
