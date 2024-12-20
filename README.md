@@ -83,3 +83,77 @@ The [Constraints.ucf](#Constraints.ucf) file specifies the pin assignments for t
 
 
 
+# FPGA Matrix Multiplication with UART Communication
+
+## Overview
+
+This project implements matrix multiplication on an FPGA using UART communication to transfer data between a PC and the FPGA. The project includes Verilog modules for UART transmission and reception, as well as the top module that integrates matrix multiplication logic. A Python script facilitates the transfer of matrices A and B to the FPGA and captures the result matrix C, which is then stored in a file.
+
+## Contents
+
+- **UART Transmitter Module**: Transmits data from the FPGA to the PC via UART.
+- **UART Receiver Module**: Receives data from the PC via UART and sends it to the FPGA.
+- **Top Module**: Integrates UART communication and matrix multiplication logic.
+- **Test Bench**: Verifies the functionality of the top module and displays the result matrix C on the console.
+- **Python Script**: Transfers matrices A and B to the FPGA, triggers the computation, and captures the result matrix C.
+
+## Modules
+
+### uart_tx (UART Transmitter)
+
+- **Inputs**:
+  - `clk`: Clock signal
+  - `reset`: Reset signal
+  - `data_in`: Data to be transmitted
+  - `tx_start`: Start transmission signal
+- **Outputs**:
+  - `tx`: UART transmit signal
+  - `tx_done`: Transmission done signal
+
+### uart_rx (UART Receiver)
+
+- **Inputs**:
+  - `clk`: Clock signal
+  - `reset`: Reset signal
+  - `rx`: UART receive signal
+- **Outputs**:
+  - `data_out`: Received data
+  - `rx_done`: Reception done signal
+
+### top_module
+
+- **Inputs**:
+  - `clk`: Clock signal
+  - `reset`: Reset signal
+  - `rx`: UART receive signal
+- **Outputs**:
+  - `tx`: UART transmit signal
+
+The top module integrates UART communication and matrix multiplication logic. It receives matrices A and B via UART, computes the matrix multiplication, and sends the result matrix C back via UART.
+
+## Test Bench
+
+The test bench verifies the functionality of the top module by performing the following steps:
+
+1. Initializes the clock, reset, and UART signals.
+2. Sends matrix A to the FPGA via UART.
+3. Sends matrix B to the FPGA via UART.
+4. Waits for computation and result transmission.
+5. Captures the result matrix C from the UART output.
+6. Displays the result matrix C on the console.
+7. Generates a VCD file for waveform viewing.
+
+### Displaying Results
+
+The result matrix C is displayed on the console using the following code:
+
+```verilog
+$display("Matrix C:");
+$display("%d %d %d %d", result_matrix_c[0][0], result_matrix_c[0][1], result_matrix_c[0][2], result_matrix_c[0][3]);
+$display("%d %d %d %d", result_matrix_c[1][0], result_matrix_c[1][1], result_matrix_c[1][2], result_matrix_c[1][3]);
+$display("%d %d %d %d", result_matrix_c[2][0], result_matrix_c[2][1], result_matrix_c[2][2], result_matrix_c[2][3]);
+$display("%d %d %d %d", result_matrix_c[3][0], result_matrix_c[3][1], result_matrix_c[3][2], result_matrix_c[3][3]);
+
+
+
+
