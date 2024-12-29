@@ -1,0 +1,66 @@
+## Clock signal
+NET "clk"            LOC = "V10" | IOSTANDARD = "LVCMOS33";   #Bank = 2, pin name = IO_L30N_GCLK0_USERCCLK
+Net "clk" TNM_NET = sys_clk_pin;
+TIMESPEC TS_sys_clk_pin = PERIOD sys_clk_pin 100000 kHz;
+
+## Reset button (Use BTN<0> as reset)
+NET "rst_n"          LOC = "B8"  | IOSTANDARD = "LVCMOS33";   #Bank = 0, Pin name = IO_L33P
+
+## UART pins (Using JA PMOD connector for UART)
+NET "rx"            LOC = "N10" | IOSTANDARD = "LVCMOS33";   #Bank = 2, Pin name = IO_L20P
+NET "tx"            LOC = "T12" | IOSTANDARD = "LVCMOS33";   #Bank = 2, Pin name = IO_L19P
+
+## Valid output signal (Using LED<0> for valid_out)
+NET "valid_out"     LOC = "U16" | IOSTANDARD = "LVCMOS33";   #Bank = 2, Pin name = IO_L2P_CMPCLK
+
+## Result Matrix Output Display (Using LED<1:7> for debugging)
+NET "result[7:0]"   LOC = "V16,U15,V15,M11,N11,R11,T11" | IOSTANDARD = "LVCMOS33";
+
+## Additional Timing Constraints
+# Setup timing
+OFFSET = IN 10 ns VALID 20 ns BEFORE "clk" RISING;
+OFFSET = OUT 10 ns AFTER "clk" RISING;
+
+# Clock to Output Constraints
+TIMESPEC "TS_CLK_TO_OUT" = FROM "clk" TO PADS 12 ns;
+
+# Clock to Setup Constraints
+TIMESPEC "TS_SETUP" = FROM PADS TO "clk" 10 ns;
+
+## Area Constraints
+AREA_GROUP "matrix_mult" RANGE = SLICE_X0Y0:SLICE_X31Y31;
+
+## Power Constraints
+CONFIG VCCAUX = "3.3";
+
+## Debug Constraints (ILA Core if needed)
+# INST "ila_inst" LOC = SLICE_X32Y32:SLICE_X47Y47;
+
+## Additional Configuration
+CONFIG UNUSED_IOB = PULLDOWN;
+CONFIG MCB_PERFORMANCE = STANDARD;
+
+## Clock Management
+NET "clk" CLOCK_DEDICATED_ROUTE = TRUE;
+
+## Debug Display (Optional - using 7-segment display)
+# Segment signals
+NET "seg<0>"         LOC = "T17" | IOSTANDARD = "LVCMOS33";
+NET "seg<1>"         LOC = "T18" | IOSTANDARD = "LVCMOS33";
+NET "seg<2>"         LOC = "U17" | IOSTANDARD = "LVCMOS33";
+NET "seg<3>"         LOC = "U18" | IOSTANDARD = "LVCMOS33";
+NET "seg<4>"         LOC = "M14" | IOSTANDARD = "LVCMOS33";
+NET "seg<5>"         LOC = "N14" | IOSTANDARD = "LVCMOS33";
+NET "seg<6>"         LOC = "L14" | IOSTANDARD = "LVCMOS33";
+NET "seg<7>"         LOC = "M13" | IOSTANDARD = "LVCMOS33";
+
+# Digit select signals
+NET "an<0>"          LOC = "N16" | IOSTANDARD = "LVCMOS33";
+NET "an<1>"          LOC = "N15" | IOSTANDARD = "LVCMOS33";
+NET "an<2>"          LOC = "P18" | IOSTANDARD = "LVCMOS33";
+NET "an<3>"          LOC = "P17" | IOSTANDARD = "LVCMOS33";
+
+## Drive Strength and Slew Rate Settings
+NET "clk"     DRIVE = 8 | SLEW = FAST;
+NET "tx"      DRIVE = 8 | SLEW = FAST;
+NET "valid_out" DRIVE = 8 | SLEW = SLOW;
